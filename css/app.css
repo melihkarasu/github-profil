@@ -1,0 +1,7 @@
+.lang-progress-bar {
+          transition: width 0.6s ease-out;
+        }
+        .repo-card:hover {
+          border-color: rgba(168, 85, 247, 0.5);
+          transform: translateY(-2px);
+        }
