@@ -1,3 +1,97 @@
+        // Standalone: GitHub API doğrudan (CORS-açık) + istatistik katmanı istemci tarafında
+        const GITHUB_API = 'https://api.github.com';
+        async function fetchGithubStats(username) {
+          const cleanUser = (username || '').trim().replace(/^@/, '');
+          if (!/^[a-zA-Z0-9](?:[a-zA-Z0-9]|-(?=[a-zA-Z0-9])){0,38}$/.test(cleanUser)) {
+            throw new Error('Geçersiz GitHub kullanıcı adı formatı');
+          }
+
+          const headers = { 'Accept': 'application/vnd.github+json' };
+          const [uRes, rRes, sRes] = await Promise.all([
+            fetch(GITHUB_API + '/users/' + encodeURIComponent(cleanUser), { headers }),
+            fetch(GITHUB_API + '/users/' + encodeURIComponent(cleanUser) + '/repos?per_page=100&sort=pushed', { headers }),
+            fetch(GITHUB_API + '/users/' + encodeURIComponent(cleanUser) + '/starred?per_page=100', { headers })
+          ]);
+
+          if (!uRes.ok) {
+            throw new Error(uRes.status === 404 ? 'GitHub kullanıcısı bulunamadı' : 'GitHub servisine ulaşılamadı');
+          }
+
+          const user = await uRes.json();
+          const repos = rRes.ok ? await rRes.json() : [];
+          const starredRaw = sRes.ok ? await sRes.json() : [];
+
+          // İstatistik hesaplamaları (proxy ile birebir)
+          let totalStarsEarned = 0;
+          let totalForks = 0;
+          const langCounts = {};
+          if (Array.isArray(repos)) {
+            repos.forEach(r => {
+              totalStarsEarned += (r.stargazers_count || 0);
+              totalForks += (r.forks_count || 0);
+              if (r.language) langCounts[r.language] = (langCounts[r.language] || 0) + 1;
+            });
+          }
+
+          const starredRepos = Array.isArray(starredRaw) ? starredRaw.map(s => ({
+            name: s.name,
+            full_name: s.full_name,
+            html_url: s.html_url,
+            description: s.description,
+            language: s.language,
+            stargazers_count: s.stargazers_count,
+            forks_count: s.forks_count,
+            owner: { login: s.owner && s.owner.login, avatar_url: s.owner && s.owner.avatar_url }
+          })) : [];
+
+          const totalOwnedWithLang = Object.values(langCounts).reduce((a, b) => a + b, 0);
+          const languages = {};
+          Object.entries(langCounts).sort((a, b) => b[1] - a[1]).forEach(([lang, count]) => {
+            languages[lang] = totalOwnedWithLang > 0 ? Math.round((count / totalOwnedWithLang) * 100) : 0;
+          });
+
+          const starredLangCounts = {};
+          starredRepos.forEach(s => { if (s.language) starredLangCounts[s.language] = (starredLangCounts[s.language] || 0) + 1; });
+          const totalStarredWithLang = Object.values(starredLangCounts).reduce((a, b) => a + b, 0);
+          const starredLanguages = {};
+          Object.entries(starredLangCounts).sort((a, b) => b[1] - a[1]).forEach(([lang, count]) => {
+            starredLanguages[lang] = totalStarredWithLang > 0 ? Math.round((count / totalStarredWithLang) * 100) : 0;
+          });
+
+          const topRepos = Array.isArray(repos)
+            ? [...repos].sort((a, b) => (b.stargazers_count || 0) - (a.stargazers_count || 0)).slice(0, 6)
+            : [];
+
+          return {
+            success: true,
+            user: {
+              login: user.login,
+              name: user.name || user.login,
+              avatar_url: user.avatar_url,
+              html_url: user.html_url,
+              bio: user.bio,
+              company: user.company,
+              location: user.location,
+              blog: user.blog,
+              public_repos: user.public_repos,
+              followers: user.followers,
+              following: user.following,
+              created_at: user.created_at
+            },
+            totalStars: totalStarsEarned,
+            totalStarsEarned,
+            totalStarred: starredRepos.length,
+            starredCount: starredRepos.length,
+            totalForks,
+            languages,
+            starredLanguages,
+            hasOwnedLanguages: Object.keys(languages).length > 0,
+            hasStarredLanguages: Object.keys(starredLanguages).length > 0,
+            topRepos,
+            starredRepos
+          };
+        }
+
 function safeCopyToClipboard(text, msg) {
   if (window.copyToClipboard) {
     window.copyToClipboard(text, msg);
@@ -57,8 +151,7 @@ let currentCardTheme = 'dark';
           showLoading(true);
 
           try {
-            const res = await fetch(`/api/github/user?username=${encodeURIComponent(user)}`);
-            const data = await res.json();
+            const data = await fetchGithubStats(user);
 
             if (!data.success) {
               throw new Error(data.error || 'Kullanıcı bulunamadı');
@@ -168,13 +261,13 @@ let currentCardTheme = 'dark';
 
           if (tab === 'starred') {
             btnStarred.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-purple-600 text-white transition shadow-sm flex items-center gap-1.5 cursor-pointer';
-            btnOwned.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-mistral-ink font-boldbg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer';
+            btnOwned.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-mistral-ink font-bold bg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer';
             gridStarred.classList.remove('hidden');
             gridOwned.classList.add('hidden');
             if (hint) hint.innerText = 'Geliştiricinin yıldızladığı (starred) favori projeler';
           } else {
             btnOwned.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-purple-600 text-white transition shadow-sm flex items-center gap-1.5 cursor-pointer';
-            btnStarred.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-mistral-ink font-boldbg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer';
+            btnStarred.className = 'px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-mistral-ink font-bold bg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer';
             gridOwned.classList.remove('hidden');
             gridStarred.classList.add('hidden');
             if (hint) hint.innerText = 'Geliştiricinin bizzat sahip olduğu herkese açık repolar';
@@ -226,12 +319,12 @@ let currentCardTheme = 'dark';
 
           if (tab === 'starred') {
             if (btnStarred) btnStarred.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-purple-600 text-white transition shadow-sm flex items-center gap-1.5 cursor-pointer';
-            if (btnOwned) btnOwned.className = 'px-3.5 py-1.5 rounded-xl text-xs font-medium text-mistral-ink font-boldbg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer';
+            if (btnOwned) btnOwned.className = 'px-3.5 py-1.5 rounded-xl text-xs font-medium text-mistral-ink font-bold bg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer';
             if (desc) desc.innerText = 'Geliştiricinin GitHub üzerinde yıldızladığı (starred) açık kaynak projelerin teknoloji ve dil dağılımı:';
             renderLanguageBreakdown(currentStatsData.starredLanguages || {}, true);
           } else {
             if (btnOwned) btnOwned.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold bg-purple-600 text-white transition shadow-sm flex items-center gap-1.5 cursor-pointer';
-            if (btnStarred) btnStarred.className = 'px-3.5 py-1.5 rounded-xl text-xs font-medium text-mistral-ink font-boldbg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer';
+            if (btnStarred) btnStarred.className = 'px-3.5 py-1.5 rounded-xl text-xs font-medium text-mistral-ink font-bold bg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer';
             if (desc) desc.innerText = 'Geliştiricinin bizzat kod yazdığı ve sahip olduğu herkese açık repolarındaki dil dağılımı:';
             renderLanguageBreakdown(currentStatsData.languages || {}, false);
           }
@@ -330,7 +423,8 @@ let currentCardTheme = 'dark';
         }
 
         function generateSvgCardPreview(user, theme) {
-          const baseUrl = window.location.origin;
+          // Standalone: SVG kart app.melihkarasu.com üretim servisinden (img tag CORS gerektirmez)
+          const baseUrl = 'https://app.melihkarasu.com';
           const cleanUser = encodeURIComponent(user);
           const cleanTheme = encodeURIComponent(theme);
           const cardUrl = `${baseUrl}/api/github/card?user=${cleanUser}&theme=${cleanTheme}`;

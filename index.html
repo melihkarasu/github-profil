@@ -3,40 +3,262 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub Profil Analitiği & Kart Üretici - Standalone</title>
+  <title>GitHub Profil Analitiği</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fa520f' stroke='%2344403c' stroke-width='1.5'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='-apple-system,BlinkMacSystemFont,Inter,sans-serif' font-weight='800' font-size='13' letter-spacing='-0.5'%3EMK%3C/text%3E%3C/svg%3E">
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="css/mistral-theme.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231c1917' stroke='%2344403c' stroke-width='1.5'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='-apple-system,BlinkMacSystemFont,Inter,sans-serif' font-weight='800' font-size='13' letter-spacing='-0.5'%3EMK%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="css/style.css">
-  
+  <link rel="stylesheet" href="css/mistral-theme.css">
+  <link rel="stylesheet" href="css/app.css">
   <style>
-    :root { --mistral-ink: #1c1917; --mistral-slate: #78716c; --mistral-stone: #a8a29e; --mistral-hairline: #e7e5e4; --mistral-cream: #f5f5f4; --mistral-beige-deep: #d6d3d1; }
-    body { font-family: 'Inter', sans-serif; background-color: #fafaf9; color: var(--mistral-ink); }
-    h1, h2, .font-editorial { font-family: 'Newsreader', serif; }
+    :root {
+      --mistral-ink: #1c1917;
+      --mistral-slate: #78716c;
+      --mistral-stone: #a8a29e;
+      --mistral-hairline: #e7e5e4;
+      --mistral-cream: #f5f5f4;
+      --mistral-cream-deeper: #e7e5e4;
+      --mistral-cream-light: #fafaf9;
+      --mistral-beige-deep: #d6d3d1;
+    }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background-color: #fafaf9; color: var(--mistral-ink); }
+    h1, h2, h3, h4, .font-editorial { font-family: 'Newsreader', serif; }
     .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .bg-mistral-cream { background-color: var(--mistral-cream); }
+    .bg-mistral-cream-deeper { background-color: var(--mistral-cream-deeper); }
+    .bg-mistral-cream-light { background-color: var(--mistral-cream-light); }
     .text-mistral-ink { color: var(--mistral-ink); }
     .text-mistral-slate { color: var(--mistral-slate); }
     .text-mistral-stone { color: var(--mistral-stone); }
-    .bg-mistral-cream { background-color: var(--mistral-cream); }
     .border-mistral-hairline { border-color: var(--mistral-hairline); }
-    .bg-mistral-canvas { background-color: #0f172a; }
+    .border-mistral-beige-deep { border-color: var(--mistral-beige-deep); }
+    .hover\\:bg-mistral-cream-deeper:hover { background-color: var(--mistral-cream-deeper) !important; }
+    .hover\\:text-mistral-ink:hover { color: var(--mistral-ink) !important; }
   </style>
 </head>
-<body class="p-4 md:p-8">
-  <div class="max-w-6xl mx-auto">
+<body class="p-4 sm:p-8">
+  <div class="max-w-7xl mx-auto">
     <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-      <div>
-        <div class="flex items-center gap-3">
-          <a href="https://github.com/melihkarasu" target="_blank" class="text-mistral-slate hover:text-teal-500 transition text-sm flex items-center gap-1">&larr; GitHub Profiline Dön</a>
-          <span class="text-mistral-stone">|</span>
-          <span class="px-2.5 py-0.5 rounded-full bg-teal-500/20 text-teal-600 text-xs font-semibold">Open Source Edition</span>
+        <div>
+          <div class="flex items-center gap-3">
+            
+          </div>
+          <h1 class="text-3xl font-extrabold tracking-tight mt-1 text-mistral-ink flex items-center gap-2">
+            <span><i class="fa-brands fa-github" style="color: rgb(0, 0, 0);"></i></span> GitHub Profil Analitiği & Rozet Üretici
+          </h1>
+          <p class="text-mistral-slate text-sm mt-0.5">
+            GitHub geliştirici analitiği, dil dağılımı, toplam yıldızlar ve profillere gömülebilir dinamik SVG kartı üretimi.
+          </p>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-normal font-editorial tracking-tight mt-1.5 text-mistral-ink flex items-center gap-2"><span>📊</span> GitHub Profil Analitiği & Kart Üretici</h1>
+
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-mistral-hairline text-xs text-mistral-slate">
+          <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+          <span>GitHub REST API v3</span>
+        </div>
       </div>
-    </div>
-    
+
+      <!-- 1. KULLANICI ARAMA PANELİ -->
+      <div class="p-6 rounded-3xl bg-white border border-mistral-hairline shadow-xl mb-8 space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-mistral-slate mb-1.5">
+            GitHub Kullanıcı Adı (Username)
+          </label>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-1">
+              <input type="text" id="input-github-user" value="melihkarasu" placeholder="GitHub kullanıcı adı girin..." onkeyup="if(event.key==='Enter') runGithubAnalysis()" class="w-full pl-10 pr-4 py-3 rounded-xl bg-white border border-mistral-hairline text-sm text-mistral-ink placeholder-slate-500 focus:border-purple-400 focus:outline-none font-mono">
+              <span class="absolute left-3.5 top-3 text-mistral-stone text-base">@</span>
+            </div>
+            <button onclick="runGithubAnalysis()" id="btn-analyze" class="px-7 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm transition shadow-lg shadow-purple-500/20 shrink-0 flex items-center justify-center gap-2">
+              <span>🚀</span> Profili Analiz Et
+            </button>
+          </div>
+        </div>
+
+        <!-- Hızlı Örnekler -->
+        <div class="flex flex-wrap items-center gap-2 text-xs pt-1">
+          <span class="text-mistral-stone text-[11px]">Hızlı Profiller:</span>
+          <button onclick="quickAnalyze('melihkarasu')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">@melihkarasu</button>
+          <button onclick="quickAnalyze('torvalds')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">@torvalds (Linus)</button>
+          <button onclick="quickAnalyze('shadcn')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">@shadcn</button>
+          <button onclick="quickAnalyze('antfu')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">@antfu (Anthony Fu)</button>
+          <button onclick="quickAnalyze('yyx990803')" class="px-2.5 py-1 rounded-lg bg-white hover:bg-mistral-cream border border-mistral-hairline text-mistral-slate transition">@yyx990803 (Evan You)</button>
+        </div>
+      </div>
+
+      <div id="loading-spinner" class="hidden py-16 text-center text-mistral-slate text-sm flex flex-col items-center gap-3">
+        <div class="w-8 h-8 rounded-full border-2 border-purple-500 border-t-transparent animate-spin"></div>
+        <span>GitHub API üzerinden geliştirici verileri ve repolar çözümleniyor...</span>
+      </div>
+
+      <!-- 2. ANALİZ SONUÇLARI ALANI -->
+      <div id="github-results-area" class="space-y-8">
+        
+        <!-- Profil Üst Künye Kartı -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-mistral-hairline shadow-2xl">
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6">
+            
+            <div class="relative w-28 h-28 rounded-3xl overflow-hidden shadow-2xl border-2 border-purple-500/50 bg-white shrink-0">
+              <img id="user-avatar" src="" class="w-full h-full object-cover" alt="Avatar">
+            </div>
+
+            <div class="flex-1 text-center sm:text-left min-w-0">
+              <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1.5">
+                <span id="badge-dev-rank" class="px-2.5 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 font-bold text-xs">Geliştirici</span>
+                <span id="badge-join-date" class="px-2.5 py-0.5 rounded-lg bg-white text-mistral-slate font-mono text-xs">2023'ten beri üye</span>
+              </div>
+              <h2 id="user-name" class="text-2xl sm:text-3xl font-black text-mistral-ink truncate"></h2>
+              <a id="user-login-link" href="#" target="_blank" rel="noopener" class="text-sm font-semibold text-purple-400 hover:underline inline-block mt-0.5 font-mono">@kullanici</a>
+              <p id="user-bio" class="text-xs sm:text-sm text-mistral-slate mt-2 max-w-2xl leading-relaxed"></p>
+
+              <!-- Ek Bilgiler (Şirket, Lokasyon, Blog) -->
+              <div class="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-3 pt-3 border-t border-mistral-hairline text-xs text-mistral-slate">
+                <span id="meta-company" class="flex items-center gap-1.5 truncate">🏢 -</span>
+                <span id="meta-location" class="flex items-center gap-1.5 truncate">📍 -</span>
+                <a id="meta-blog" href="#" target="_blank" rel="noopener" class="text-purple-400 hover:underline flex items-center gap-1.5 truncate">🔗 -</a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Metrik Sayaçları (5'li Grid) -->
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mt-6 pt-6 border-t border-mistral-hairline">
+            <div class="p-4 rounded-2xl bg-white border border-mistral-hairline text-center">
+              <span class="text-[10px] text-mistral-slate uppercase font-semibold">Kazanılan Yıldız</span>
+              <div id="stat-stars" class="text-xl sm:text-2xl font-black text-amber-500 font-mono mt-1">⭐ 0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-mistral-hairline text-center">
+              <span class="text-[10px] text-mistral-slate uppercase font-semibold">Yıldızlanan (Starred)</span>
+              <div id="stat-starred" class="text-xl sm:text-2xl font-black text-purple-600 font-mono mt-1">🌟 0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-mistral-hairline text-center">
+              <span class="text-[10px] text-mistral-slate uppercase font-semibold">Açık Repo</span>
+              <div id="stat-repos" class="text-xl sm:text-2xl font-black text-mistral-ink font-mono mt-1">0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-mistral-hairline text-center">
+              <span class="text-[10px] text-mistral-slate uppercase font-semibold">Takipçiler</span>
+              <div id="stat-followers" class="text-xl sm:text-2xl font-black text-mistral-ink font-mono mt-1">0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-white border border-mistral-hairline text-center">
+              <span class="text-[10px] text-mistral-slate uppercase font-semibold">Takip Edilen</span>
+              <div id="stat-following" class="text-xl sm:text-2xl font-black text-mistral-ink font-mono mt-1">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. PROGRAMLAMA DİLLERİ DAĞILIMI (SEKMELİ: BİZZAT YAZILANLAR & TAKİP EDİLENLER) -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-mistral-hairline shadow-xl space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-mistral-hairline">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <button onclick="switchLangTab('starred')" id="tab-lang-starred" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-purple-600 text-white transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+                  <span>🌟</span> Takip Edilen Projeler (İlgi Alanları)
+                </button>
+                <button onclick="switchLangTab('owned')" id="tab-lang-owned" class="px-3.5 py-1.5 rounded-xl text-xs font-medium text-mistral-ink font-bold bg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer">
+                  <span>💻</span> Bizzat Yazılan Projeler
+                </button>
+              </div>
+              <p class="text-mistral-slate text-xs mt-0.5" id="lang-tab-desc">Yıldızladığınız açık kaynak projelerin teknoloji ve dil dağılımı:</p>
+            </div>
+            <span class="text-xs text-mistral-slate font-mono" id="top-lang-badge">Dil Analizi</span>
+          </div>
+
+          <!-- Çok Renkli Dil İlerleme Çubuğu -->
+          <div class="w-full h-3 rounded-full bg-white overflow-hidden flex" id="lang-bar-container">
+            <!-- JS ile renkli bloklar -->
+          </div>
+
+          <!-- Dil Lejant Kartları -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pt-2" id="lang-cards-container">
+            <!-- JS ile doldurulur -->
+          </div>
+        </div>
+
+        <!-- 4. GÖMÜLEBİLİR DİNAMİK SVG KART STÜDYOSU (README ROZETİ) -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-mistral-hairline shadow-xl space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base font-bold text-mistral-ink flex items-center gap-2">
+                <span>🏷️</span> GitHub Profilinize Gömülebilir SVG İstatistik Kartı
+              </h3>
+              <p class="text-mistral-slate text-xs mt-0.5">
+                Kendi GitHub README.md dosyanıza veya kişisel portföyünüze ekleyebileceğiniz dinamik kart:
+              </p>
+            </div>
+
+            <!-- Tema Seçici -->
+            <div class="flex p-1 rounded-xl bg-white border border-mistral-hairline text-xs">
+              <button onclick="setCardTheme('dark')" id="ct-dark" class="px-3 py-1 rounded-lg font-bold bg-purple-600 text-white transition shadow">Dark</button>
+              <button onclick="setCardTheme('cyberpunk')" id="ct-cyberpunk" class="px-3 py-1 rounded-lg font-bold text-mistral-slate hover:text-mistral-ink transition">Cyberpunk</button>
+              <button onclick="setCardTheme('emerald')" id="ct-emerald" class="px-3 py-1 rounded-lg font-bold text-mistral-slate hover:text-mistral-ink transition">Emerald</button>
+              <button onclick="setCardTheme('slate')" id="ct-slate" class="px-3 py-1 rounded-lg font-bold text-mistral-slate hover:text-mistral-ink transition">Slate</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+            <!-- Kart Önizlemesi -->
+            <div class="lg:col-span-6 p-4 rounded-2xl bg-mistral-canvas border border-mistral-hairline flex items-center justify-center overflow-x-auto shadow-inner">
+              <div id="svg-card-preview" class="transition-transform hover:scale-[1.02]">
+                <!-- SVG Rozet Buraya Gelecek -->
+              </div>
+            </div>
+
+            <!-- Gömme Kodları -->
+            <div class="lg:col-span-6 space-y-3">
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <label class="text-[11px] text-mistral-slate uppercase font-mono font-bold">Markdown Kodu (GitHub README):</label>
+                  <button onclick="copySnippet('md')" class="text-xs text-purple-400 hover:underline">Kopyala</button>
+                </div>
+                <textarea id="snippet-md" rows="2" readonly class="w-full p-2.5 rounded-xl bg-white border border-mistral-hairline text-xs font-mono text-purple-300 focus:outline-none"></textarea>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <label class="text-[11px] text-mistral-slate uppercase font-mono font-bold">HTML Gömme Kodu (Web Siteleri İçin):</label>
+                  <button onclick="copySnippet('html')" class="text-xs text-purple-400 hover:underline">Kopyala</button>
+                </div>
+                <textarea id="snippet-html" rows="2" readonly class="w-full p-2.5 rounded-xl bg-white border border-mistral-hairline text-xs font-mono text-mistral-slate focus:outline-none"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. REPOLAR (SEKMELİ: YILDIZLANAN REPOLAR & SAHİP OLUNAN REPOLAR) -->
+        <div class="p-6 sm:p-8 rounded-3xl bg-white border border-mistral-hairline shadow-xl space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-mistral-hairline">
+            <div class="flex items-center gap-2">
+              <button onclick="switchRepoTab('starred')" id="tab-btn-starred" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-purple-600 text-white transition shadow-sm flex items-center gap-1.5 cursor-pointer">
+                <span>🌟</span> Yıldızlanan Repolar (<span id="tab-count-starred">0</span>)
+              </button>
+              <button onclick="switchRepoTab('owned')" id="tab-btn-owned" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-mistral-ink font-bold bg-mistral-cream hover:bg-mistral-cream-deeper text-mistral-ink border border-mistral-beige-deep transition flex items-center gap-1.5 cursor-pointer">
+                <span>📦</span> Kendi Repoları (<span id="tab-count-owned">0</span>)
+              </button>
+            </div>
+            <span class="text-xs text-mistral-stone font-mono" id="repo-view-hint">Yıldızlanan projeler listeleniyor</span>
+          </div>
+
+          <!-- Yıldızlanan Repolar Izgarası -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="starred-repos-grid">
+            <!-- JS ile doldurulur -->
+          </div>
+
+          <!-- Sahip Olunan Repolar Izgarası -->
+          <div class="hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="owned-repos-grid">
+            <!-- JS ile doldurulur -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Toast Bildirimi -->
+      <div id="github-toast" class="hidden fixed bottom-6 right-6 py-2.5 px-4 rounded-xl bg-purple-600 text-white font-bold text-xs shadow-2xl transition z-50"></div>
+
+      <!-- İstemci Mantığı -->
   </div>
+
+  <footer class="mt-16 text-center text-xs text-mistral-stone border-t border-mistral-hairline pt-6">
+    <p>Açık Kaynak Standalone Sürüm • Veriler: <a href="https://docs.github.com/en/rest" target="_blank" rel="noopener" class="underline hover:text-mistral-ink">GitHub REST API</a> (doğrudan, CORS-açık) • SVG Kart: app.melihkarasu.com üretim servisi</p>
+  </footer>
+
+  <script src="js/app.js"></script>
 </body>
 </html>
